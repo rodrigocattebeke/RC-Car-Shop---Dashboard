@@ -24,11 +24,12 @@
   --font-page-color-hover: rgb(173, 1, 41);
   --font-price-color: rgb(0, 0, 0);
 
-  /* ICONS COLORS */
+  /* ICONS */
   --icon-primary-color: rgb(0, 0, 0);
   --icon-primary-color-hover: rgb(123, 123, 123);
   --icon-secondary-color: rgb(255, 255, 255);
   --icon-secondary-color-hover: rgb(123, 123, 123);
+  --icon-size: 2rem;
 
   /* PRIMARY COLORS */
   --primary-color: rgb(187, 0, 0);
@@ -69,12 +70,37 @@ body {
   font-family: "Roboto", sans-serif !important;
 }
 
+h1 {
+  font-size: 2rem; /* 32px */
+}
+
+h2 {
+  font-size: 1.5rem; /* 24px */
+}
+
+h3 {
+  font-size: 1.25rem; /* 20px */
+}
+
+h4 {
+  font-size: 1.125rem; /* 18px */
+}
+
+p {
+  font-size: 1rem; /* 16px */
+}
+
 body {
   min-width: 100%;
   min-height: 100vh;
   padding: 0;
   margin: 0;
   color: var(--font-primary-color);
+}
+
+main {
+  padding: 1rem;
+  background-color: var(--background-color-primary);
 }
 
 /* BACKGROUNDS */
@@ -114,17 +140,28 @@ body {
 }
 
 /* PAGE CLASS */
-
-.main {
-  background-color: var(--background-color-primary);
-}
-
-.main.home-page {
+.home-page {
   background-color: var(--background-color-secondary-transparent);
 }
 
-@media screen and (max-width: 250px) {
-  html {
-    font-size: 10px;
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 2.25rem; /* 36px */
+  }
+
+  h2 {
+    font-size: 1.875rem; /* 30px */
+  }
+
+  h3 {
+    font-size: 1.5rem; /* 24px */
+  }
+
+  h4 {
+    font-size: 1.25rem; /* 20px */
+  }
+
+  p {
+    font-size: 1rem; /* 16px */
   }
 }
