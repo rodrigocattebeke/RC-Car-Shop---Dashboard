@@ -1,0 +1,71 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: auto;
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  font-size: 1rem;
+  color: var(--font-primary-color);
+  transition: color 0.2s, background-color 0.2s;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.button.fullWidth {
+  width: 100%;
+}
+
+.button:disabled {
+  opacity: 0.4;
+  filter: brightness(0.8);
+  cursor: not-allowed;
+  transition: 0.2s;
+}
+
+.button.default {
+  background-color: var(--background-color-secondary);
+}
+
+.button.default:active {
+  background-color: var(--background-color-secondary);
+}
+
+.button.primary {
+  background-color: var(--primary-color);
+  color: var(--font-tertiary-color);
+}
+
+.button.primary:active {
+  background-color: var(--primary-color-hover);
+}
+
+.button.secondary {
+  background-color: var(--secondary-color);
+}
+
+.button.secondary:active {
+  filter: brightness(0.8);
+}
+
+.button.danger {
+  background-color: var(---danger-color);
+}
+
+.button.danger:active {
+  filter: brightness(0.8);
+}
+
+.button.success {
+  background-color: var(--success-color);
+}
+
+.button.success:active {
+  filter: brightness(0.8);
+}
+
+.button:hover {
+  filter: brightness(0.91);
+}
