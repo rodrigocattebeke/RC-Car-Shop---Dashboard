@@ -20,3 +20,7 @@
   height: var(--icon-size);
   fill: var(--font-tertiary-color);
 }
+
+.productsSection {
+  margin-top: 1rem;
+}
