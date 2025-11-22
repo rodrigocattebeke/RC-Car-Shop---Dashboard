@@ -22,7 +22,7 @@
   width: 100%;
   height: auto;
   min-height: 3rem;
-  background-color: var(--background-color-secondary-transparent);
+  background-color: var(--background-color-primary);
   border-radius: 1rem;
 }
 
