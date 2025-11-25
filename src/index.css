@@ -29,7 +29,10 @@
   --icon-primary-color-hover: rgb(123, 123, 123);
   --icon-secondary-color: rgb(255, 255, 255);
   --icon-secondary-color-hover: rgb(123, 123, 123);
-  --icon-size: 2rem;
+  --icon-size: 2.5rem;
+
+  /* NAVBAR */
+  --navbar-height-mobile: 4rem;
 
   /* PRIMARY COLORS */
   --primary-color: rgb(187, 0, 0);
@@ -101,6 +104,7 @@ body {
 
 main {
   padding: 1rem !important;
+  padding-bottom: calc(var(--navbar-height-mobile) + 1rem) !important;
 }
 
 /* BACKGROUNDS */
@@ -126,17 +130,10 @@ main {
 }
 
 /* ICONS */
-.material-symbols-outlined {
-  font-family: "Material Symbols Outlined";
-}
-
-.shopIcon {
-  color: var(--primary-color);
-  cursor: pointer;
-}
-
-.shopIcon:hover {
-  color: var(--primary-color-hover);
+.icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  transition: width 0.2s;
 }
 
 /* PAGE CLASS */
