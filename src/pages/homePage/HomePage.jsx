@@ -10,14 +10,14 @@ export const HomePage = () => {
   return (
     <>
       <section className={styles.headerSection}>
-        <header className={styles.header}>
+        <div className={styles.header}>
           <h1>Productos</h1>
           <div>
             <Button title="Agregar producto" mode="primary">
               <Add />
             </Button>
           </div>
-        </header>
+        </div>
         <div>
           <SearchBar />
         </div>
