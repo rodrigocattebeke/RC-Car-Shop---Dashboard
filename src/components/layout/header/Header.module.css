@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-right: var(--icon-size);
+}
+
+.returnContainer {
+  width: fit-content;
+  height: fit-content;
+}
+
+.returnContainer svg {
+  fill: var(--font-primary-color);
+  cursor: pointer;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.titleContainer h1 {
+  width: fit-content;
+  margin: 0;
+  font-size: 1.7rem;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
