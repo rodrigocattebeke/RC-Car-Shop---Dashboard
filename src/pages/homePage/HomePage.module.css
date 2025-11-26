@@ -28,6 +28,11 @@
 .filterBar {
   width: 100%;
   max-width: 100%;
+  overflow: auto;
+}
+
+.filterBar::-webkit-scrollbar {
+  display: none;
 }
 
 .filterBar ul {
@@ -43,6 +48,8 @@
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color 0.1s, color 0.1s;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .filterOption.active {
