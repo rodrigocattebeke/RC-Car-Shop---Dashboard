@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import styles from "./ProductCard.module.css";
+import { ROUTES } from "@/constants/routes";
 /**
  * @param {Object} params
  * @param {Object} params.product - Objeto de producto
@@ -15,7 +17,7 @@ import styles from "./ProductCard.module.css";
 
 export const ProductCard = ({ product }) => {
   return (
-    <div className={styles.card} data-id={product.id}>
+    <Link to={`${ROUTES.PRODUCT}/${product.id}`} className={styles.card}>
       <div className={styles.imgContainer}>
         <img src={product.imgURL} className={styles.img} alt={`Imagen del producto ${product.title}`}></img>
       </div>
@@ -28,6 +30,6 @@ export const ProductCard = ({ product }) => {
           <p>Stock: {product.stock}</p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
