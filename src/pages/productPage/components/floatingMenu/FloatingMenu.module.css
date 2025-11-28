@@ -1,0 +1,105 @@
+/* Button */
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 0.8rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  background-color: var(--background-color-secondary);
+}
+
+/* Menu Button */
+.container {
+  position: fixed;
+  right: 1rem;
+  bottom: calc(var(--navbar-height-mobile) + 1.2rem);
+  width: fit-content;
+  --button-size-menu: 4rem;
+  --transition_delay: 0.07s;
+}
+
+.menuWrapper {
+  position: relative;
+  width: auto;
+}
+
+.menuButton {
+  position: relative;
+  background-color: var(--primary-color);
+  width: var(--button-size-menu);
+  height: var(--button-size-menu);
+  z-index: 5;
+  box-sizing: border-box;
+}
+
+.menuButton:hover {
+  background-color: var(--primary-color-hover);
+}
+
+.menuButton svg {
+  width: 2.4rem;
+  height: 2.4rem;
+  fill: var(--icon-secondary-color);
+}
+
+.closeIcon {
+  animation: spinRight 0.3s;
+}
+
+.menuIcon {
+  animation: spinLeft 0.3s;
+}
+
+/* Actions Container */
+.deleteButton,
+.editButton {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  transition: 0.1s;
+}
+
+.editButton {
+  transition-delay: var(--transition_delay);
+}
+
+.deleteButton svg,
+.editButton svg {
+  width: 1.9rem;
+  height: 1.9rem;
+  fill: var(--font-secondary-color);
+}
+
+.editButton.active {
+  transform: translateY(calc(-1 * var(--button-size-menu))) translateX(-50%);
+}
+
+.deleteButton.active {
+  transform: translateY(calc(-1 * (var(--button-size-menu) * 2))) translateX(-50%);
+  transition-delay: var(--transition_delay);
+}
+
+/* Keyframes */
+@keyframes spinLeft {
+  0% {
+    transform: rotateZ(90deg);
+  }
+  100% {
+    transform: rotateZ(0);
+  }
+}
+
+@keyframes spinRight {
+  0% {
+    transform: rotateZ(0);
+  }
+  100% {
+    transform: rotateZ(90deg);
+  }
+}
