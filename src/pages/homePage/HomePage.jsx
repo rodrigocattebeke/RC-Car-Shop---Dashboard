@@ -6,6 +6,8 @@ import { SearchBar } from "@/components/ui/searchBar/SearchBar";
 import { ProductList } from "./components/productList/ProductList";
 import { FILTERS, FILTERS_LABELS } from "@/constants/filters.js";
 import tempProducts from "@/dev/products.json";
+import { Link } from "react-router-dom";
+import { ROUTES } from "@/constants/routes";
 
 export const HomePage = () => {
   const [filterSelected, setFilterSelected] = useState(FILTERS.ALL); //ALL is the default filter
@@ -19,11 +21,11 @@ export const HomePage = () => {
       <section className={styles.headerSection}>
         <div className={styles.header}>
           <h1>Productos</h1>
-          <div>
+          <Link to={ROUTES.ADD_PRODUCT}>
             <Button title="Agregar producto" mode="primary">
               <Add />
             </Button>
-          </div>
+          </Link>
         </div>
         <div>
           <SearchBar />
