@@ -1,4 +1,4 @@
-import styles from "./Header.module.css";
+import styles from "./PageHeader.module.css";
 import ArrowBackIcon from "@/assets/svg/arrow_back.svg?react";
 
 /**
@@ -7,15 +7,15 @@ import ArrowBackIcon from "@/assets/svg/arrow_back.svg?react";
  * @returns
  */
 
-export const Header = ({ title = "" }) => {
+export const PageHeader = ({ title = "" }) => {
   return (
-    <header className={styles.header}>
+    <section className={styles.pageHeader}>
       <div className={styles.returnContainer}>
         <ArrowBackIcon className="icon" />
       </div>
       <div className={styles.titleContainer}>
         <h1>{title}</h1>
       </div>
-    </header>
+    </section>
   );
 };
