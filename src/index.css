@@ -14,6 +14,10 @@
   --button-hover-color: rgb(134, 0, 0);
   --button-active-background-color: rgb(155, 0, 36);
 
+  /* BORDERS */
+  --border-color-primary: rgb(217, 217, 217);
+  --border-color-primary-active: rgb(180, 180, 180);
+
   /* FONT COLORS */
   --font-primary-color: rgb(0, 0, 0);
   --font-secondary-color: rgb(120, 118, 118);
