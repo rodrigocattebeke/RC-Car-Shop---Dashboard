@@ -3,7 +3,16 @@ import { Search } from "@/components/icons/Search";
 import styles from "./SearchBar.module.css";
 import { useEffect, useState } from "react";
 
-export const SearchBar = ({ onSearch, onInputChange }) => {
+/**
+ *
+ * @param {Object} params
+ * @param {function} params.onSearch
+ * @param {function} params.onInputChange
+ * @param {"primary"|"secondary"} [params.mode]
+ * @returns
+ */
+
+export const SearchBar = ({ onSearch, onInputChange, mode = "primary" }) => {
   const [inputValue, setInputValue] = useState("");
 
   // Handle submit
@@ -21,7 +30,7 @@ export const SearchBar = ({ onSearch, onInputChange }) => {
   }, [inputValue, onInputChange]);
 
   return (
-    <div className={styles.searchBar}>
+    <div className={`${styles.searchBar} ${styles[mode]}`}>
       <div className={styles.searchIconContainer}>
         <label htmlFor="search" onClick={() => onSearch(inputValue)}>
           <Search />

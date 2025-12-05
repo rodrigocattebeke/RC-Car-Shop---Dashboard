@@ -22,7 +22,6 @@
   width: 100%;
   height: auto;
   min-height: 3rem;
-  background-color: var(--background-color-primary);
   border-radius: 1rem;
 }
 
@@ -42,4 +41,14 @@
   fill: var(--font-secondary-color);
   width: var(--icon-size);
   height: var(--icon-size);
+}
+
+/* Modes */
+
+.searchBar.primary {
+  background-color: var(--background-color-primary);
+}
+
+.searchBar.secondary {
+  background-color: var(--background-color-secondary);
 }
