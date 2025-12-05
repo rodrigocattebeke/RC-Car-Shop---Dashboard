@@ -4,6 +4,7 @@
   --background-color-secondary: rgb(217, 217, 217);
   --background-color-secondary-transparent: rgba(217, 217, 217, 0.445);
   --background-color-tertiary: rgb(245, 245, 245);
+  --background-backdrop: rgba(0, 0, 0, 0.397);
 
   /* BUTTONS COLORS */
   --button-background-color: rgb(187, 0, 0);
@@ -153,6 +154,7 @@ h5 {
 .icon {
   width: var(--icon-size);
   height: var(--icon-size);
+  fill: var(--icon-primary-color);
   transition: width 0.2s;
 }
 
