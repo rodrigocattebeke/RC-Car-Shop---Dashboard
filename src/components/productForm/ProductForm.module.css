@@ -26,22 +26,35 @@
   width: 100%;
   max-width: 22rem;
   background-color: var(--color-bg-secondary);
-  border: 2px dashed var(--border-color-primary);
   border-radius: 1rem;
   overflow: hidden;
   aspect-ratio: 1;
+}
+
+.imgContainer::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed var(--border-color-primary);
+  border-radius: 1rem;
+  z-index: 0;
 }
 
 .imgContainer img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 1;
 }
 
 .uploadImgContainer {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
+  z-index: 3;
 }
 
 .uploadImgContainer input {
@@ -59,8 +72,6 @@
   padding: 0.7rem;
 }
 
-.inputContainer input,
-.inputContainer select,
 .inputContainer textarea {
   width: 100%;
   border: 1px solid var(--border-color-primary);
@@ -72,18 +83,12 @@
   color: var(--font-primary-color);
 }
 
-.inputContainer input::placeholder,
 .inputContainer textarea::placeholder {
   color: var(--font-secondary-color);
 }
 
-.inputContainer input:focus,
 .inputContainer textarea:focus {
   border: 1px solid var(--border-color-primary-active);
-}
-
-.inputContainer select option {
-  font-size: 1.1rem;
 }
 
 .inputContainer textarea {

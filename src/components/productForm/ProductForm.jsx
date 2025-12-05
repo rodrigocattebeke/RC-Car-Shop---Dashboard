@@ -1,11 +1,15 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./ProductForm.module.css";
 import { ErrorTooltip } from "../ui/errorTooltip/ErrorTooltip";
 // import { Modal } from "../ui/modal/Modal";
 // import { ImageCropper } from "@/components/imageCropper/ImageCropper";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button/Button";
+import { CustomSelect } from "@/components/ui/form/customSelect/CustomSelect";
+import { FormInput } from "../ui/form/formInput/FormInput";
+import { scrollTo } from "@/helpers/scrollTo";
+import { ImageCropper } from "../imageCropper/ImageCropper";
+import { useNavigate } from "react-router-dom";
 
 const DEFAULT_VALUES = {
   title: "",
@@ -13,12 +17,12 @@ const DEFAULT_VALUES = {
   category: "",
   description: "",
   tags: "",
-  price: 0,
-  stock: 0,
+  price: "",
+  stock: "",
   brand: "",
 };
 
-export const ProductForm = ({ initialValuesObject, onSubmit = () => console.log("hola") }) => {
+export const ProductForm = ({ initialValuesObject, onSubmit }) => {
   const initialValues = {
     ...DEFAULT_VALUES,
     ...initialValuesObject,
@@ -79,7 +83,7 @@ export const ProductForm = ({ initialValuesObject, onSubmit = () => console.log(
     e.target.value = "";
   };
 
-  const onInputChange = (e) => {
+  const handleInputChange = (e) => {
     let field = e.target.name,
       value = e.target.value;
     const NUMREGEX = /^(0|[1-9]\d*)?$/;
@@ -100,9 +104,6 @@ export const ProductForm = ({ initialValuesObject, onSubmit = () => console.log(
           setStock(value);
         }
         break;
-      case "category":
-        setCategory(value);
-        break;
       case "tags":
         setTags(value);
         break;
@@ -112,42 +113,61 @@ export const ProductForm = ({ initialValuesObject, onSubmit = () => console.log(
     setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
+  const handleSelect = (field, value) => {
+    switch (field) {
+      case "brand":
+        setBrand(value);
+        break;
+      case "category":
+        setCategory(value);
+        break;
+      default:
+        break;
+    }
+    setErrors((prev) => ({ ...prev, [field]: "" }));
+  };
+
   // Image crop functions
-  const onCropConfirm = (croppedImg) => {
+  const handleCropConfirm = (croppedImg) => {
     setImgURL(croppedImg.url);
     setImgFile(croppedImg.file);
     setShowImageCropper(false);
   };
 
-  const onCropCancel = () => {
+  const handleCropCancel = () => {
     setShowImageCropper(false);
   };
 
   //Save Modal functions
   const handleGuardarButton = () => {
     if (!title.trim()) {
-      navigate("#title");
+      scrollTo("title");
       setErrors((prev) => ({ ...prev, title: "Se debe de poner un nombre" }));
       return;
     }
     if (!price.trim() || price == 0) {
-      navigate("#price");
+      scrollTo("price");
       setErrors((prev) => ({ ...prev, price: "Se debe de poner un precio válido" }));
       return;
     }
     if (!stock.trim() || stock == 0) {
-      navigate("#stock");
-      setErrors((prev) => ({ ...prev, price: "Se debe de poner un stock válido" }));
+      scrollTo("stock");
+      setErrors((prev) => ({ ...prev, stock: "Se debe de poner un stock válido" }));
       return;
     }
-    if (!category.trim()) {
-      navigate("#category");
-      setErrors((prev) => ({ ...prev, price: "Se debe de seleccionar una categoría" }));
+    if (!brand) {
+      scrollTo("brand");
+      setErrors((prev) => ({ ...prev, brand: "Se debe de seleccionar una marca" }));
+      return;
+    }
+    if (!category) {
+      scrollTo("category");
+      setErrors((prev) => ({ ...prev, category: "Se debe de seleccionar una categoría" }));
       return;
     }
     if (!tags.trim()) {
-      navigate("#tags");
-      setErrors((prev) => ({ ...prev, price: "Se debe de poner al menos un tag" }));
+      scrollTo("tags");
+      setErrors((prev) => ({ ...prev, tags: "Se debe de poner al menos un tag" }));
       return;
     }
     setShowGuardarModal(true);
@@ -187,7 +207,7 @@ export const ProductForm = ({ initialValuesObject, onSubmit = () => console.log(
 
   return (
     <>
-      <section className={`${styles.formContainer} mt-2`}>
+      <section className={`${styles.formContainer} mt-3`}>
         <div className={`${styles.infoContainer}`}>
           {/* Image */}
           <div className={styles.imgWrapper}>
@@ -206,27 +226,28 @@ export const ProductForm = ({ initialValuesObject, onSubmit = () => console.log(
             <h2>Información del producto</h2>
             <div className={`${styles.inputContainer}`} id="title">
               <p>Nombre del producto</p>
-              <input type="text" placeholder="Nombre del producto" name="title" value={title} onChange={(e) => onInputChange(e)}></input>
+              <FormInput placeholder="Nombre del producto" name="title" value={title} onChange={handleInputChange} />
               {errors.title && <ErrorTooltip error={errors.title} />}
             </div>
 
             <div className={`${styles.descriptionContainer} ${styles.inputContainer}`} id="description">
               <p>Descripción del producto</p>
-              <textarea placeholder="Descripción" name="description" value={description} onChange={(e) => onInputChange(e)} />
+              <textarea placeholder="Descripción" name="description" value={description} onChange={handleInputChange} />
             </div>
           </section>
+
           {/* Price and stock */}
           <section className={`${styles.inputsSection}`}>
             <h2>Precio y stock</h2>
             <div className={`${styles.inputContainer}`} id="price">
               <p>Precio</p>
-              <input type="number" placeholder="Precio del producto" name="price" value={price} onChange={(e) => onInputChange(e)}></input>
+              <FormInput type="number" placeholder="Precio del producto" name="price" value={price} onChange={handleInputChange} />
               {errors.price && <ErrorTooltip error={errors.price} />}
             </div>
 
             <div className={`${styles.inputContainer}`} id="stock">
               <p>Stock</p>
-              <input type="number" placeholder="Stock del producto" name="stock" value={stock} onChange={(e) => onInputChange(e)}></input>
+              <FormInput type="number" placeholder="Stock del producto" name="stock" value={stock} onChange={handleInputChange} />
               {errors.stock && <ErrorTooltip error={errors.stock} />}
             </div>
           </section>
@@ -236,27 +257,19 @@ export const ProductForm = ({ initialValuesObject, onSubmit = () => console.log(
             <h2>Organización</h2>
             <div className={`${styles.inputContainer}`} id="brand">
               <p>Marca</p>
-              <select name="brand" value={brand} onChange={(e) => onInputChange(e)}>
-                <option selected disabled value="">
-                  - Seleccione una marca -
-                </option>
-              </select>
+              <CustomSelect options={["opcion 1"]} addItemText="Agregar nueva marca" onOptionSelect={(value) => handleSelect("brand", value)} />
               {errors.brand && <ErrorTooltip error={errors.brand} />}
             </div>
 
             <div className={`${styles.inputContainer}`} id="category">
               <p>Categoría</p>
-              <select name="category" value={category} onChange={(e) => onInputChange(e)}>
-                <option selected disabled value="">
-                  - Seleccione una categoría -
-                </option>
-              </select>
+              <CustomSelect addItemText="Agregar nueva categoría" options={["opcion 1"]} onOptionSelect={(value) => handleSelect("category", value)} />
               {errors.category && <ErrorTooltip error={errors.category} />}
             </div>
 
             <div className={`${styles.inputContainer}`} id="tags">
               <p>Tags</p>
-              <input type="text" placeholder="Agrega los tags separados por coma (,)" name="tags" value={tags} onChange={(e) => onInputChange(e)}></input>
+              <FormInput placeholder="Agrega los tags separados por coma (,)" name="tags" value={tags} onChange={handleInputChange} />
               {errors.tags && <ErrorTooltip error={errors.tags} />}
             </div>
           </section>
@@ -265,20 +278,20 @@ export const ProductForm = ({ initialValuesObject, onSubmit = () => console.log(
         {/* Action buttons */}
         <div className={styles.actionButtonsWrapper}>
           <div className={`${styles.actionButtonsContainer} d-flex flex-sm-row`}>
-            <Button mode="primary" text="Guardar" fullWidth="true" onClick={handleGuardarButton} />
-            <Button mode="default" text="Cancelar" fullWidth="true" onClick={openCancelarModal} />
+            <Button mode="primary" children="Guardar" fullWidth="true" onClick={handleGuardarButton} />
+            <Button mode="default" children="Cancelar" fullWidth="true" onClick={openCancelarModal} />
           </div>
         </div>
       </section>
 
-      {/*     Modals     
-      Crop image
-      {showImageCropper ? <ImageCropper imgFile={imgFile} aspect={4 / 3} onCropConfirm={onCropConfirm} onCropCancel={onCropCancel} /> : ""}
+      {/* Modals      */}
+      {/* Crop image */}
 
+      {showImageCropper ? <ImageCropper imgFile={imgFile} aspect={1} onCropConfirm={handleCropConfirm} onCropCancel={handleCropConfirm} /> : ""}
+      {/* 
       <Modal title="¿Confirmar datos?" show={showGuardarModal} onConfirm={onConfirmGuardarModal} onCancel={closeGuardarModal} onClose={closeGuardarModal} />
 
-      <Modal title="¿Seguro que desea cancelar?" show={showCancelarModal} onConfirm={onConfirmCancelarModal} onCancel={closeCancelarModal} onClose={closeCancelarModal} />
-      */}
+      <Modal title="¿Seguro que desea cancelar?" show={showCancelarModal} onConfirm={onConfirmCancelarModal} onCancel={closeCancelarModal} onClose={closeCancelarModal} /> */}
     </>
   );
 };
