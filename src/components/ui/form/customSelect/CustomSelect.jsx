@@ -72,26 +72,32 @@ export const CustomSelect = ({ name = "", options = [], value = "Selecciona una 
         <div className={styles.modalContent}>
           <h2>{addItemText}</h2>
 
-          <form className={styles.modalInputsContainer} onSubmit={(e) => e.preventDefault()}>
-            <FormInput
-              label="Nombre"
-              name="item"
-              value={itemName}
-              placeholder="Ingresa el nombre"
-              onChange={(e) => {
-                setItemName(e.target.value);
-              }}
-              required={true}
-            />
-            <FormInput
-              label="Descripción"
-              name="description"
-              value={itemDescription}
-              placeholder="Ingresa la descripción"
-              onChange={(e) => {
-                setItemDescription(e.target.value);
-              }}
-            />
+          <form className={styles.modalForm} onSubmit={(e) => e.preventDefault()}>
+            <div>
+              <p>Nombre</p>
+              <FormInput
+                label="Nombre"
+                name="item"
+                value={itemName}
+                placeholder="Ingresa el nombre del ítem"
+                onChange={(e) => {
+                  setItemName(e.target.value);
+                }}
+                required={true}
+              />
+            </div>
+            <div>
+              <p>Descripción</p>
+              <FormInput
+                label="Descripción"
+                name="description"
+                value={itemDescription}
+                placeholder="Ingresa la descripción del ítem"
+                onChange={(e) => {
+                  setItemDescription(e.target.value);
+                }}
+              />
+            </div>
             <div className={styles.modalButtons}>
               <Button mode="secondary" children="Cancelar" fullWidth="true" onClick={handleCancelModal} />
               <Button mode="primary" children="Guardar" fullWidth="true" onClick={handleAddNewItem} />

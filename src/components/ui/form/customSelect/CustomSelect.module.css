@@ -127,10 +127,10 @@
   background-color: var(--background-color-primary);
 }
 
-.modalInputsContainer {
+.modalForm {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 1.2rem;
 }
 
 /* Keyframes */
