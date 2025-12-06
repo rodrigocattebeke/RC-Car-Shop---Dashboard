@@ -36,18 +36,21 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
     tags: "",
   };
 
-  const [brand, setBrand] = useState(initialValues.brand);
-  const [category, setCategory] = useState(initialValues.category);
-  const [description, setDescription] = useState(initialValues.description);
-  const [imgURL, setImgURL] = useState(initialValues.imgURL);
-  const [imgFile, setImgFile] = useState(undefined);
-  const [price, setPrice] = useState(initialValues.price);
+  const [form, setForm] = useState({
+    brand: initialValues.brand,
+    category: initialValues.category,
+    description: initialValues.description,
+    imgFile: undefined,
+    price: initialValues.price,
+    stock: initialValues.stock,
+    tags: initialValues.tags,
+    title: initialValues.title,
+  });
+
+  const [imgURL, setImgURL] = useState(undefined);
   const [showCancelarModal, setShowCancelarModal] = useState(false);
   const [showGuardarModal, setShowGuardarModal] = useState(false);
   const [showImageCropper, setShowImageCropper] = useState(false);
-  const [stock, setStock] = useState(initialValues.stock);
-  const [tags, setTags] = useState(initialValues.tags);
-  const [title, setTitle] = useState(initialValues.title);
   const [errors, setErrors] = useState(EMPTY_ERRORS);
   const navigate = useNavigate();
   const uploadFileRef = useRef();
@@ -74,7 +77,7 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
     }
 
     // Set imgFile
-    setImgFile(file);
+    setForm((prev) => ({ ...prev, imgFile: file }));
 
     //show image cropper
     setShowImageCropper(true);
@@ -83,54 +86,26 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
     e.target.value = "";
   };
 
-  const handleInputChange = (e) => {
-    let field = e.target.name,
-      value = e.target.value;
-    const NUMREGEX = /^(0|[1-9]\d*)?$/;
-    switch (field) {
-      case "title":
-        setTitle(value);
-        break;
-      case "description":
-        setDescription(value);
-        break;
-      case "price":
-        if (NUMREGEX.test(value)) {
-          setPrice(value);
-        }
-        break;
-      case "stock":
-        if (NUMREGEX.test(value)) {
-          setStock(value);
-        }
-        break;
-      case "tags":
-        setTags(value);
-        break;
-      default:
-        break;
+  const onInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name == "price" || name == "stock") {
+      const NUMREGEX = /^(0|[1-9]\d*)?$/;
+      if (NUMREGEX.test(value)) setForm((prev) => ({ ...prev, [name]: value }));
+    } else {
+      setForm((prev) => ({ ...prev, [name]: value }));
     }
-    setErrors((prev) => ({ ...prev, [field]: "" }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleSelect = (field, value) => {
-    switch (field) {
-      case "brand":
-        setBrand(value);
-        break;
-      case "category":
-        setCategory(value);
-        break;
-      default:
-        break;
-    }
+    setForm((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
   // Image crop functions
   const handleCropConfirm = (croppedImg) => {
     setImgURL(croppedImg.url);
-    setImgFile(croppedImg.file);
+    setForm((prev) => ({ ...prev, imgFile: croppedImg }));
     setShowImageCropper(false);
   };
 
@@ -140,32 +115,32 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
 
   //Save Modal functions
   const handleGuardarButton = () => {
-    if (!title.trim()) {
+    if (!form.title.trim()) {
       scrollTo("title");
       setErrors((prev) => ({ ...prev, title: "Se debe de poner un nombre" }));
       return;
     }
-    if (!price.trim() || price == 0) {
+    if (!form.price.trim() || form.price == 0) {
       scrollTo("price");
       setErrors((prev) => ({ ...prev, price: "Se debe de poner un precio válido" }));
       return;
     }
-    if (!stock.trim() || stock == 0) {
+    if (!form.stock.trim() || form.stock == 0) {
       scrollTo("stock");
       setErrors((prev) => ({ ...prev, stock: "Se debe de poner un stock válido" }));
       return;
     }
-    if (!brand) {
+    if (!form.brand) {
       scrollTo("brand");
       setErrors((prev) => ({ ...prev, brand: "Se debe de seleccionar una marca" }));
       return;
     }
-    if (!category) {
+    if (!form.category) {
       scrollTo("category");
       setErrors((prev) => ({ ...prev, category: "Se debe de seleccionar una categoría" }));
       return;
     }
-    if (!tags.trim()) {
+    if (!form.tags.trim()) {
       scrollTo("tags");
       setErrors((prev) => ({ ...prev, tags: "Se debe de poner al menos un tag" }));
       return;
@@ -178,18 +153,7 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
   };
 
   const onConfirmGuardarModal = async () => {
-    //    Detect if the showSelectStatus is true
-    const formObject = {
-      imgURL,
-      title,
-      description,
-      price,
-      stock,
-      brand,
-      category,
-      tags,
-    };
-    await onSubmit(formObject);
+    await onSubmit(form);
   };
 
   // Cancel Modal Functions
@@ -226,13 +190,13 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
             <h2>Información del producto</h2>
             <div className={`${styles.inputContainer}`} id="title">
               <p>Nombre del producto</p>
-              <FormInput placeholder="Nombre del producto" name="title" value={title} onChange={handleInputChange} />
+              <FormInput placeholder="Nombre del producto" name="title" value={form.title} onChange={onInputChange} />
               {errors.title && <ErrorTooltip error={errors.title} />}
             </div>
 
             <div className={`${styles.descriptionContainer} ${styles.inputContainer}`} id="description">
               <p>Descripción del producto</p>
-              <textarea placeholder="Descripción" name="description" value={description} onChange={handleInputChange} />
+              <textarea placeholder="Descripción" name="description" value={form.description} onChange={onInputChange} />
             </div>
           </section>
 
@@ -241,13 +205,13 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
             <h2>Precio y stock</h2>
             <div className={`${styles.inputContainer}`} id="price">
               <p>Precio</p>
-              <FormInput type="number" placeholder="Precio del producto" name="price" value={price} onChange={handleInputChange} />
+              <FormInput type="number" placeholder="Precio del producto" name="price" value={form.price} onChange={onInputChange} />
               {errors.price && <ErrorTooltip error={errors.price} />}
             </div>
 
             <div className={`${styles.inputContainer}`} id="stock">
               <p>Stock</p>
-              <FormInput type="number" placeholder="Stock del producto" name="stock" value={stock} onChange={handleInputChange} />
+              <FormInput type="number" placeholder="Stock del producto" name="stock" value={form.stock} onChange={onInputChange} />
               {errors.stock && <ErrorTooltip error={errors.stock} />}
             </div>
           </section>
@@ -269,7 +233,7 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
 
             <div className={`${styles.inputContainer}`} id="tags">
               <p>Tags</p>
-              <FormInput placeholder="Agrega los tags separados por coma (,)" name="tags" value={tags} onChange={handleInputChange} />
+              <FormInput placeholder="Agrega los tags separados por coma (,)" name="tags" value={form.tags} onChange={onInputChange} />
               {errors.tags && <ErrorTooltip error={errors.tags} />}
             </div>
           </section>
@@ -287,7 +251,7 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
       {/* Modals      */}
       {/* Crop image */}
 
-      {showImageCropper ? <ImageCropper imgFile={imgFile} aspect={1} onCropConfirm={handleCropConfirm} onCropCancel={handleCropConfirm} /> : ""}
+      {showImageCropper ? <ImageCropper imgFile={form.imgFile} aspect={1} onCropConfirm={handleCropConfirm} onCropCancel={handleCropConfirm} /> : ""}
       {/* 
       <Modal title="¿Confirmar datos?" show={showGuardarModal} onConfirm={onConfirmGuardarModal} onCancel={closeGuardarModal} onClose={closeGuardarModal} />
 
