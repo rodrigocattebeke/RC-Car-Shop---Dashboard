@@ -26,8 +26,7 @@
 /*    Filter Bar     */
 
 .filterBar {
-  width: 100%;
-  max-width: 100%;
+  width: calc(100% + 1rem);
   overflow: auto;
 }
 
@@ -44,10 +43,11 @@
 
 .filterOption {
   list-style: none;
-  padding: 0.1rem 0.5rem;
-  border-radius: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.9rem;
   cursor: pointer;
   transition: background-color 0.1s, color 0.1s;
+  background-color: var(--background-color-primary);
   white-space: nowrap;
   box-sizing: border-box;
 }
@@ -59,6 +59,7 @@
 
 /*    Products Container    */
 .productsSection {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1rem;
