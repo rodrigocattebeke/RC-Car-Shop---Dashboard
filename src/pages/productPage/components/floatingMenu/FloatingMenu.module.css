@@ -43,7 +43,7 @@
 .menuButton svg {
   width: 2.4rem;
   height: 2.4rem;
-  fill: var(--icon-secondary-color);
+  fill: var(--icon-tertiary-color);
 }
 
 .closeIcon {
