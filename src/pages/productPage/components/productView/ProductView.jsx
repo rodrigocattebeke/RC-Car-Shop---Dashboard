@@ -43,11 +43,11 @@ export const ProductView = ({ product }) => {
           <div className={styles.metadataContainer}>
             <div className={styles.dataContainer}>
               <p>Añadido el:</p>
-              <p>123</p>
+              <p>{product.createdAt}</p>
             </div>
             <div className={styles.dataContainer}>
               <p>Actualizado el:</p>
-              <p>123</p>
+              <p>{product.updatedAt}</p>
             </div>
           </div>
         </section>
