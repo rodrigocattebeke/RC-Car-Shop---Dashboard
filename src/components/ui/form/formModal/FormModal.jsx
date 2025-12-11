@@ -33,7 +33,7 @@ export const FormModal = ({ onSubmit, onCancel, addItemText = "", itemName = "",
               label="Nombre"
               name="item"
               value={item.name}
-              placeholder="Ingresa el nombre del ítem"
+              placeholder="Ingresa el nombre"
               onChange={(e) => {
                 setItem({ ...item, name: e.target.value });
               }}
@@ -46,7 +46,7 @@ export const FormModal = ({ onSubmit, onCancel, addItemText = "", itemName = "",
               label="Descripción"
               name="description"
               value={item.description}
-              placeholder="Ingresa la descripción del ítem"
+              placeholder="Ingresa la descripción"
               onChange={(e) => {
                 setItem({ ...item, description: e.target.value });
               }}
