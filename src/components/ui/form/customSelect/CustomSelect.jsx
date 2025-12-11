@@ -5,6 +5,7 @@ import CloseIcon from "@/assets/svg/close.svg?react";
 import { Button } from "@/components/ui/button/Button";
 import { SearchBar } from "@/components/ui/searchBar/SearchBar";
 import { FormInput } from "@/components/ui/form/formInput/FormInput";
+import { FormModal } from "../formModal/FormModal";
 
 export const CustomSelect = ({ name = "", options = [], value = "Selecciona una opción", addItemText = "", onOptionSelect, onAddNewItem, ...props }) => {
   const [selectedOption, setSelectedOption] = useState(value);
@@ -68,43 +69,7 @@ export const CustomSelect = ({ name = "", options = [], value = "Selecciona una 
       </div>
 
       {/* Add new item modal */}
-      <div className={`${styles.modalContainer} ${showModal ? styles.show : ""}`}>
-        <div className={styles.modalContent}>
-          <h2>{addItemText}</h2>
-
-          <form className={styles.modalForm} onSubmit={(e) => e.preventDefault()}>
-            <div>
-              <p>Nombre</p>
-              <FormInput
-                label="Nombre"
-                name="item"
-                value={itemName}
-                placeholder="Ingresa el nombre del ítem"
-                onChange={(e) => {
-                  setItemName(e.target.value);
-                }}
-                required={true}
-              />
-            </div>
-            <div>
-              <p>Descripción</p>
-              <FormInput
-                label="Descripción"
-                name="description"
-                value={itemDescription}
-                placeholder="Ingresa la descripción del ítem"
-                onChange={(e) => {
-                  setItemDescription(e.target.value);
-                }}
-              />
-            </div>
-            <div className={styles.modalButtons}>
-              <Button mode="secondary" children="Cancelar" fullWidth="true" onClick={handleCancelModal} />
-              <Button mode="primary" children="Guardar" fullWidth="true" onClick={handleAddNewItem} />
-            </div>
-          </form>
-        </div>
-      </div>
+      <FormModal showModal={showModal} addItemText={addItemText} onSubmit={handleAddNewItem} onCancel={handleCancelModal} />
     </>
   );
 };
