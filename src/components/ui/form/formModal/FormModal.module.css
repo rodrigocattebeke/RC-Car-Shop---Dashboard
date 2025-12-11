@@ -1,0 +1,54 @@
+/* Modal */
+
+.modalButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.7rem;
+}
+
+.modalContainer {
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-backdrop);
+  z-index: 98;
+}
+
+.modalContainer.show {
+  display: flex;
+  animation: fadeIn 0.1s;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 25rem;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: var(--background-color-primary);
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Keyframes */
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
