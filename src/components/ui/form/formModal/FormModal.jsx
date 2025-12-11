@@ -3,7 +3,6 @@ import styles from "./FormModal.module.css";
 import { FormInput } from "../formInput/FormInput";
 import { Button } from "../../button/Button";
 /**
- *
  * @param {Object} params
  * @param {function} params.onSubmit
  * @param {function} params.onCancel
@@ -14,13 +13,12 @@ import { Button } from "../../button/Button";
  * @returns
  */
 
-export const FormModal = ({ onSubmit, onCancel, addItemText = "", itemName, itemDescription, showModal = false }) => {
-  const [itemN, setItemN] = useState(itemName || "");
-  const [itemDesc, setItemDesc] = useState(itemDescription || "");
+export const FormModal = ({ onSubmit, onCancel, addItemText = "", itemName = "", itemDescription = "", showModal = false }) => {
+  const [item, setItem] = useState({ name: itemName, description: itemDescription });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await onSubmit();
+    await onSubmit(item);
   };
 
   return (
@@ -34,10 +32,10 @@ export const FormModal = ({ onSubmit, onCancel, addItemText = "", itemName, item
             <FormInput
               label="Nombre"
               name="item"
-              value={itemN}
+              value={item.name}
               placeholder="Ingresa el nombre del ítem"
               onChange={(e) => {
-                setItemN(e.target.value);
+                setItem({ ...item, name: e.target.value });
               }}
               required={true}
             />
@@ -47,10 +45,10 @@ export const FormModal = ({ onSubmit, onCancel, addItemText = "", itemName, item
             <FormInput
               label="Descripción"
               name="description"
-              value={itemDesc}
+              value={item.description}
               placeholder="Ingresa la descripción del ítem"
               onChange={(e) => {
-                setItemDesc(e.target.value);
+                setItem({ ...item, description: e.target.value });
               }}
             />
           </div>
