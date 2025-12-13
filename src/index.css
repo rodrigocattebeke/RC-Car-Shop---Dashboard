@@ -1,7 +1,7 @@
 :root {
   /* BACKGROUNDS COLORS */
   --background-color-primary: rgb(255, 255, 255);
-  --background-color-secondary: rgb(217, 217, 217);
+  --background-color-secondary: rgb(232, 232, 232);
   --background-color-secondary-transparent: rgba(217, 217, 217, 0.445);
   --background-color-tertiary: rgb(245, 245, 245);
   --background-backdrop: rgba(0, 0, 0, 0.397);
@@ -31,13 +31,16 @@
 
   /* ICONS */
   --icon-primary-color: rgb(0, 0, 0);
-  --icon-primary-color-hover: rgb(123, 123, 123);
-  --icon-secondary-color: rgb(255, 255, 255);
-  --icon-secondary-color-hover: rgb(123, 123, 123);
+  --icon-primary-color-hover: rgb(90, 90, 90);
+  --icon-secondary-color: rgb(164, 164, 164);
+  --icon-secondary-color-hover: rgb(178, 178, 178);
+  --icon-tertiary-color: rgb(255, 255, 255);
+  --icon-tertiary-color-hover: rgb(208, 208, 208);
   --icon-size: 2.2rem;
+  --icon-size-md: 1.7rem;
 
   /* NAVBAR */
-  --navbar-height-mobile: 4rem;
+  --navbar-height-mobile: 4.5rem;
 
   /* PRIMARY COLORS */
   --primary-color: rgb(187, 0, 0);
