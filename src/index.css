@@ -115,6 +115,11 @@ main {
   padding-bottom: calc(var(--navbar-height-mobile) + 1rem) !important;
 }
 
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
 a {
   text-decoration: none;
 }
