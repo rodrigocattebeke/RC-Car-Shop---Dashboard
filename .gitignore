@@ -23,5 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# Dev directories and files
+# Dev and Env
+.env
 dev
