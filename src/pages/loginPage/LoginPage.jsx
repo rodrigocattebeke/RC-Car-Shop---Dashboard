@@ -2,8 +2,14 @@ import React from "react";
 import styles from "./LoginPage.module.css";
 import { GoogleLoginButton } from "@/components/ui/auth/GoogleLoginButton/GoogleLoginButton";
 import StoreLogo from "@/assets/images/rccarshop-logo.png";
+import { useAuth } from "@/hooks/useAuth";
+import { Loader } from "@/components/ui/loader/Loader";
 
 export const LoginPage = () => {
+  const { singInWithGoogle, loading } = useAuth();
+
+  if (loading) return <Loader fullScreen={true} />;
+
   return (
     <>
       <main className={styles.container}>
@@ -17,7 +23,7 @@ export const LoginPage = () => {
           </h1>
         </div>
         <div className={styles.buttonContainer}>
-          <GoogleLoginButton />
+          <GoogleLoginButton onLogin={singInWithGoogle} />
         </div>
       </main>
     </>
