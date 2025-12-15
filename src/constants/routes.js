@@ -1,12 +1,13 @@
 const PRODUCT = "/producto";
 
 export const ROUTES = {
-  HOME: "/",
+  ACCOUNT: "/cuenta",
+  ADD_PRODUCT: `${PRODUCT}/agregar`,
   ANALYTICS: "/analiticas",
   CATEGORIES: "/categorias",
-  PURCHASES: "/compras",
-  ACCOUNT: "/cuenta",
+  HOME: "/",
+  LOGIN: "/login",
   PRODUCT,
-  ADD_PRODUCT: `${PRODUCT}/agregar`,
   PRODUCT_PAGE: "/producto/:id",
+  PURCHASES: "/compras",
 };
