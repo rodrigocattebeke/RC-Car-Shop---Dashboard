@@ -12,7 +12,7 @@ export const LoginPage = () => {
 
   return (
     <>
-      <main className={styles.container}>
+      <div className={styles.container}>
         <div className={styles.logoContainer}>
           <img src={StoreLogo} />
         </div>
@@ -25,7 +25,7 @@ export const LoginPage = () => {
         <div className={styles.buttonContainer}>
           <GoogleLoginButton onLogin={singInWithGoogle} />
         </div>
-      </main>
+      </div>
     </>
   );
 };
