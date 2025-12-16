@@ -110,9 +110,9 @@ body {
   color: var(--font-primary-color);
 }
 
-main {
-  padding: 1rem !important;
-  padding-bottom: calc(var(--navbar-height-mobile) + 1rem) !important;
+.app-layout {
+  padding: 1rem;
+  padding-bottom: calc(var(--navbar-height-mobile) + 1rem);
 }
 
 #root {
