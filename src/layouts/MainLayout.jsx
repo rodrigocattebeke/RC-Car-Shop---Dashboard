@@ -8,7 +8,7 @@ export const MainLayout = () => {
       <header>
         <NavBar />
       </header>
-      <main className="container-xxl">
+      <main className="container-xxl app-layout">
         <Outlet />
       </main>
     </>
