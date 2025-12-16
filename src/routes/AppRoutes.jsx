@@ -8,12 +8,15 @@ import { LoginPage } from "@/pages/loginPage/LoginPage";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { MainLayout } from "@/layouts/MainLayout";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { PublicRoute } from "@/components/auth/PublicRoute";
 
 export const AppRoutes = () => {
   return (
     <Routes>
-      <Route element={<AuthLayout />}>
-        <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+      <Route element={<PublicRoute />}>
+        <Route element={<AuthLayout />}>
+          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+        </Route>
       </Route>
       <Route element={<ProtectedRoute />}>
         <Route element={<MainLayout />}>
