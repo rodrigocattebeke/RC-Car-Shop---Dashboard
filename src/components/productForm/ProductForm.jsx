@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./ProductForm.module.css";
 import { ErrorTooltip } from "../ui/errorTooltip/ErrorTooltip";
-// import { Modal } from "../ui/modal/Modal";
 // import { ImageCropper } from "@/components/imageCropper/ImageCropper";
 import { Button } from "@/components/ui/button/Button";
 import { CustomSelect } from "@/components/ui/form/customSelect/CustomSelect";
@@ -10,16 +9,18 @@ import { FormInput } from "../ui/form/formInput/FormInput";
 import { scrollTo } from "@/helpers/scrollTo";
 import { ImageCropper } from "../imageCropper/ImageCropper";
 import { useNavigate } from "react-router-dom";
+import { Modal } from "@/components/ui/modal/Modal";
 
 const DEFAULT_VALUES = {
   title: "",
   imgURL: "",
-  category: "",
+  image: "",
+  categoryId: "",
   description: "",
   tags: "",
   price: "",
   stock: "",
-  brand: "",
+  brandId: "",
 };
 
 export const ProductForm = ({ initialValuesObject, onSubmit }) => {
@@ -32,22 +33,23 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
     title: "",
     price: "",
     stock: "",
-    category: "",
+    categoryId: "",
+    brandId: "",
     tags: "",
   };
 
   const [form, setForm] = useState({
-    brand: initialValues.brand,
-    category: initialValues.category,
+    brandId: initialValues.brandId,
+    categoryId: initialValues.categoryId,
     description: initialValues.description,
-    imgFile: undefined,
+    image: "",
     price: initialValues.price,
     stock: initialValues.stock,
     tags: initialValues.tags,
     title: initialValues.title,
   });
 
-  const [imgURL, setImgURL] = useState(undefined);
+  const [imgURL, setImgURL] = useState(initialValues.imgURL || "");
   const [showCancelarModal, setShowCancelarModal] = useState(false);
   const [showGuardarModal, setShowGuardarModal] = useState(false);
   const [showImageCropper, setShowImageCropper] = useState(false);
@@ -58,8 +60,22 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
   //Validate onSubmit function
   if (!onSubmit || typeof onSubmit !== "function") return console.error("Se espera una funcion onSubmit");
 
-  //Handle inputs
+  //Reset form
+  const resetForm = () => {
+    setForm({
+      title: "",
+      imgURL: "",
+      image: "",
+      categoryId: "",
+      description: "",
+      tags: "",
+      price: "",
+      stock: "",
+      brandId: "",
+    });
+  };
 
+  //Handle inputs
   const handleUploadImgButton = () => {
     uploadFileRef.current?.click();
   };
@@ -76,8 +92,8 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
       return;
     }
 
-    // Set imgFile
-    setForm((prev) => ({ ...prev, imgFile: file }));
+    // Set image
+    setForm((prev) => ({ ...prev, image: file }));
 
     //show image cropper
     setShowImageCropper(true);
@@ -105,7 +121,7 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
   // Image crop functions
   const handleCropConfirm = (croppedImg) => {
     setImgURL(croppedImg.url);
-    setForm((prev) => ({ ...prev, imgFile: croppedImg }));
+    setForm((prev) => ({ ...prev, image: croppedImg.file }));
     setShowImageCropper(false);
   };
 
@@ -130,14 +146,14 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
       setErrors((prev) => ({ ...prev, stock: "Se debe de poner un stock válido" }));
       return;
     }
-    if (!form.brand) {
+    if (!form.brandId) {
       scrollTo("brand");
-      setErrors((prev) => ({ ...prev, brand: "Se debe de seleccionar una marca" }));
+      setErrors((prev) => ({ ...prev, brandId: "Se debe de seleccionar una marca" }));
       return;
     }
-    if (!form.category) {
+    if (!form.categoryId) {
       scrollTo("category");
-      setErrors((prev) => ({ ...prev, category: "Se debe de seleccionar una categoría" }));
+      setErrors((prev) => ({ ...prev, categoryId: "Se debe de seleccionar una categoría" }));
       return;
     }
     if (!form.tags.trim()) {
@@ -153,7 +169,16 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
   };
 
   const onConfirmGuardarModal = async () => {
-    await onSubmit(form);
+    const fd = new FormData();
+    Object.entries(form).forEach(([key, value]) => {
+      fd.append(key, value);
+    });
+    try {
+      await onSubmit(fd);
+      resetForm();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // Cancel Modal Functions
@@ -221,14 +246,14 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
             <h2>Organización</h2>
             <div className={`${styles.inputContainer}`} id="brand">
               <p>Marca</p>
-              <CustomSelect options={["opcion 1"]} addItemText="Agregar nueva marca" onOptionSelect={(value) => handleSelect("brand", value)} />
-              {errors.brand && <ErrorTooltip error={errors.brand} />}
+              <CustomSelect options={["opcion 1"]} addItemText="Agregar nueva marca" value={form.brandId} onOptionSelect={(value) => handleSelect("brandId", value)} />
+              {errors.brandId && <ErrorTooltip error={errors.brandId} />}
             </div>
 
             <div className={`${styles.inputContainer}`} id="category">
               <p>Categoría</p>
-              <CustomSelect addItemText="Agregar nueva categoría" options={["opcion 1"]} onOptionSelect={(value) => handleSelect("category", value)} />
-              {errors.category && <ErrorTooltip error={errors.category} />}
+              <CustomSelect addItemText="Agregar nueva categoría" options={["opcion 1"]} value={form.categoryId} onOptionSelect={(value) => handleSelect("categoryId", value)} />
+              {errors.categoryId && <ErrorTooltip error={errors.categoryId} />}
             </div>
 
             <div className={`${styles.inputContainer}`} id="tags">
@@ -251,11 +276,11 @@ export const ProductForm = ({ initialValuesObject, onSubmit }) => {
       {/* Modals      */}
       {/* Crop image */}
 
-      {showImageCropper ? <ImageCropper imgFile={form.imgFile} aspect={1} onCropConfirm={handleCropConfirm} onCropCancel={handleCropConfirm} /> : ""}
-      {/* 
+      {showImageCropper ? <ImageCropper imgFile={form.image} aspect={1} onCropConfirm={handleCropConfirm} onCropCancel={handleCropConfirm} /> : ""}
+
       <Modal title="¿Confirmar datos?" show={showGuardarModal} onConfirm={onConfirmGuardarModal} onCancel={closeGuardarModal} onClose={closeGuardarModal} />
 
-      <Modal title="¿Seguro que desea cancelar?" show={showCancelarModal} onConfirm={onConfirmCancelarModal} onCancel={closeCancelarModal} onClose={closeCancelarModal} /> */}
+      {/* <Modal title="¿Seguro que desea cancelar?" show={showCancelarModal} onConfirm={onConfirmCancelarModal} onCancel={closeCancelarModal} onClose={closeCancelarModal} /> */}
     </>
   );
 };
